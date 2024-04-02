@@ -12,105 +12,165 @@ stan = pygame.image.load('pics\\Nstanding.png')
 
 Clock = pygame.time.Clock()
 
+class player():
+    def __init__(self,x,y,width,height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height 
+        self.speed = 10
+        self.isjump = False
+        self.jumpheight = 10
+        self.left = False
+        self.right = False
+        self.walkcount = 0
+        self.standing = True
 
-x=50
-y=400
-width=40
-height=60
-speed=6
-isjump=False # if it is jumping
+    def draw(self,win):
+        if self.walkcount + 1 >= 6:
+            self.walkcount = 0
 
-jumpheight=10
+        if not(self.standing):   
 
-left=False
-right=False
-walkcount=0
+            if self.left: 
+                win.blit(walkLeft[self.walkcount//2], (self.x,self.y))
+                self.walkCount +=1
+
+            elif self.right:
+                win.blit(walkRight[self.walkcount//2], (self.x,self.y))
+                self.walkCount +=1
+
+        else:        
+
+            if self.right:
+                win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y)) 
+
+            else:
+                win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
+            
+
+
+class weapons():
+    def __init__(self,x,y,width,height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height 
+        self.facing = facing
+        self.vel = 8 * facing
+
+    def draw(self,win):
+        win.clit(pygame.image.load('pics\\shur.png'),(self.x,self.y))    
+
+
 
 run=True
 
 def redrawgamewindow():
-    global left
-    global right
-    global walkcount
     win.blit(bg,(0,0))
+    naruto.draw(win)
 
-    if walkcount + 1 > 6:
-        walkcount = 0
+    for shurkine in shurikens:
+        shurikens.draw(win)
 
-    if left and isjump == False:   
-        win.blit(walkLeft[walkcount//2], (x,y))
-        walkCount +=1
+    pygame.display.update()
 
-    elif right and isjump == False:
-        win.blit(walkRight[walkcount//2], (x,y))
-        walkCount =1
-
-    elif right and isjump:
-        win.blit(walkRight[2],(x,y))
-
-    elif left and isjump:
-        win.blit(walkLeft[2],(x,y))  
-
-    elif not(isjump):
-        win.blit(stan,(x,y))
-
-    pygame.display.update()    
+naruto = player(500,400,100,100) 
+shurikens = []  
+throwspeed =0
 
 
 
 while run:
 
+
     ########## FRAME RATE ##########
-    pygame.time.delay(60)
+    Clock.tick(25)
+    ##########
+
+    if throwspeed > 0:
+        throwspeed += 1
+
+    if throwspeed > 3:
+          throwspeed = 0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
+    for shuriken in shurikens:
+        if shuriken.x < 699 and shuriken.x > 0:
+            shuriken.x += shuriken.vel
+
+
+        else:
+            shuriken.pop(shuriken.index(shuriken))    
+
+
+
     ########## KEYS ##########        
 
     keys=pygame.key.get_pressed()
 
+    ######### SHOOTING #########
+
+    if keys [pygame.K_SPACE] and throwspeed == 0:
+
+        if naruto.left == True:
+            facing = -1
+        else:
+            facing = 1
+
+        if len(shurikens) <5:
+
+            shurikens.append(weapons(round(naruto.x + naruto.width//2),round(naruto.y + naruto.height//2),40,40,facing))
+        throwspeed = 1
+
+
     ########## LEFT ##########
-    if keys[pygame.K_LEFT] and x > speed:
-        x -= speed
-        left = True
-        right = False
+    if keys[pygame.K_LEFT] and naruto.x > naruto.speed:
+        naruto.x -= naruto.speed
+
+        naruto.left = True
+        naruto.right = False
+        naruto.standing = False
 
     ########## RIGHT #################    
-    if keys[pygame.K_RIGHT] and x < 690 - width - speed:
-        x += speed
-        left = False
-        right = True
+    if keys[pygame.K_RIGHT] and naruto.x < 690 - naruto.width - naruto.speed:
+        naruto.x += naruto.speed
+
+        naruto.left = False
+        naruto.right = True
+        naruto.standing = False
 
     else:
-        left = False
-        right = False
-        walkCount = 0
+        naruto.standing = True
+        naruto.left = False
+        naruto.right = False
+        naruto.walkCount = 0
     
     ########## JUMP ##########
-    if isjump == False:
-         if keys[pygame.K_SPACE]:
-             isjump = True
-             left = False
-             right = False
-             walkCount = 0
+    if naruto.isjump == False:
+         if keys[pygame.K_UP]:
+             naruto.isjump = True
+
+             naruto.walkCount = 0
 
     else:
-        if jumpheight >= -10:
+        if naruto.jumpheight >= -10:
             neg = 1
 
-            if jumpheight < 0:
+            if naruto.jumpheight < 0:
                 neg =-1 
 
-            y -= (jumpheight **2)* 0.5* neg
-            jumpheight -=1
+            naruto.y -= (naruto.jumpheight **2)* 0.5* neg
+            naruto.jumpheight -=1
 
                               
         else:
 
-            isjump = False 
-            jumpheight = 10
+            naruto.isjump = False 
+            naruto.jumpheight = 10
 
 
     redrawgamewindow()
