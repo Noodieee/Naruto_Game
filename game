@@ -60,7 +60,60 @@ class weapons():
         self.vel = 8 * facing
 
     def draw(self,win):
-        win.blit(pygame.image.load('pics\\shur.png'),(self.x,self.y))    
+        win.blit(pygame.image.load('pics\\shur.png'),(self.x,self.y)) 
+
+class enemy():
+
+    walkRightS = [pygame.image.load('pics\\SR2.PNG'),pygame.image.load('pics\\SR3.PNG'),pygame.image.load('pics\\SR1.PNG')]
+    walkLeftS = [pygame.image.load('pics\\SR2.PNG'),pygame.image.load('pics\\SR3.PNG'),pygame.image.load('pics\\SR1.PNG')]
+
+
+
+    def __init__(self,x,y,width,height,end):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height 
+        self.end = end
+        self.path = [self.x,self.end]
+        self.speed = 8
+        self.walkcount = 0
+
+    def draw(self,win):
+        self.move()
+
+        if self.walkcount +1 >=6:
+            self.walkcount = 0
+
+        if self.speed > 0:
+            win.blit(self.walkRightS[self.walkcount//2],(self.x,self.y))
+            self.walkcount += 1
+        
+        else:
+            win.blit(self.walkLeftS[self.walkcount//2],(self.x,self.y))
+            self.walkcount += 1
+
+
+
+
+    def move(self):
+        if self.speed > 0:
+
+            if self.x + self.speed < self.path[1]:
+                self.x += self.speed
+            else:
+                self.speed = self.speed *-1
+                self.walkcount = 0
+
+        else:
+            if self.x - self.speed > self.path[0]:
+                self.x += self.speed
+
+            else:
+                self.speed = self.speed *-1
+                self.walkcount = 0
+
+
 
 
 
@@ -69,13 +122,14 @@ run=True
 def redrawgamewindow():
     win.blit(bg,(0,0))
     naruto.draw(win)
-
+    sasuke.draw(win)
     for shuriken in shurikens:
         shuriken.draw(win)
 
     pygame.display.update()
 
 naruto = player(500,400,100,100) 
+sasuke = enemy(30,400,100,100,600)
 shurikens = []  
 throwspeed = 0
 
