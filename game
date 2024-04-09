@@ -31,8 +31,8 @@ class player():
             self.walkcount = 0
 
         if not(self.standing):   
-
             if self.left: 
+
                 win.blit(walkLeft[self.walkcount//2], (self.x,self.y))
                 self.walkCount +=1
 
@@ -43,7 +43,7 @@ class player():
         else:        
 
             if self.right:
-                win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y)) 
+                win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
 
             else:
                 win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
@@ -86,14 +86,12 @@ class enemy():
             self.walkcount = 0
 
         if self.speed > 0:
-            win.blit(self.walkRightS[self.walkcount//2],(self.x,self.y))
+            win.blit(self.walkRightS[self.walkcount//2], (self.x,self.y))
             self.walkcount += 1
         
         else:
             win.blit(self.walkLeftS[self.walkcount//2],(self.x,self.y))
             self.walkcount += 1
-
-
 
 
     def move(self):
