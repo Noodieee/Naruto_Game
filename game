@@ -82,7 +82,7 @@ class enemy():
     def draw(self,win):
         self.move()
 
-        if self.walkcount +1 >=6:
+        if self.walkcount + 1 >= 6:
             self.walkcount = 0
 
         if self.speed > 0:
@@ -90,7 +90,7 @@ class enemy():
             self.walkcount += 1
         
         else:
-            win.blit(self.walkLeftS[self.walkcount//2],(self.x,self.y))
+            win.blit(self.walkLeftS[self.walkcount//2], (self.x,self.y))
             self.walkcount += 1
 
 
@@ -100,7 +100,7 @@ class enemy():
             if self.x + self.speed < self.path[1]:
                 self.x += self.speed
             else:
-                self.speed = self.speed *-1
+                self.speed = self.speed *- 1
                 self.walkcount = 0
 
         else:
@@ -108,7 +108,7 @@ class enemy():
                 self.x += self.speed
 
             else:
-                self.speed = self.speed *-1
+                self.speed = self.speed *- 1
                 self.walkcount = 0
 
 
@@ -130,7 +130,6 @@ naruto = player(500,400,100,100)
 sasuke = enemy(30,400,100,100,600)
 shurikens = []  
 throwspeed = 0
-
 
 
 while run:
