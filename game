@@ -25,6 +25,7 @@ class player():
         self.right = False
         self.walkcount = 0
         self.standing = True
+        self.hitbox = (self.x + 10 ,self.y + 5 ,80,80)
 
     def draw(self,win):
         if self.walkcount + 1 >= 6:
@@ -47,7 +48,9 @@ class player():
 
             else:
                 win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
-            
+
+        self.hitbox = (self.x + 10 ,self.y + 5 ,80,80)
+        pygame.draw.rect(win,(255,0,0),self.hitbox,2)    
 
 
 class weapons():
@@ -58,9 +61,12 @@ class weapons():
         self.height = height 
         self.facing = facing
         self.vel = 8 * facing
+        self.hitbox = (self.x,self.y,40,40)
 
     def draw(self,win):
         win.blit(pygame.image.load('pics\\shur.png'),(self.x,self.y)) 
+        self.hitbox = (self.x,self.y,40,40)
+        pygame.draw.rect(win,(255,0,0),self.hitbox,2)  
 
 class enemy():
 
@@ -78,6 +84,8 @@ class enemy():
         self.path = [self.x,self.end]
         self.speed = 8
         self.walkcount = 0
+        self.hitbox = (self.x + 10,self.y + 5,80,80)
+
 
     def draw(self,win):
         self.move()
@@ -93,14 +101,17 @@ class enemy():
             win.blit(self.walkLeftS[self.walkcount//2], (self.x,self.y))
             self.walkcount += 1
 
+        self.hitbox = (self.x + 10,self.y + 5,80,80)
+        pygame.draw.rect(win,(255,0,0),self.hitbox,2)    
+
 
     def move(self):
-        if self.speed > 0:
+        if self.speed >0:
 
             if self.x + self.speed < self.path[1]:
                 self.x += self.speed
             else:
-                self.speed = self.speed *- 1
+                self.speed = self.speed * -1
                 self.walkcount = 0
 
         else:
