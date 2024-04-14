@@ -122,7 +122,8 @@ class enemy():
                 self.speed = self.speed *- 1
                 self.walkcount = 0
 
-
+def hit(self):
+    print("Hit")                
 
 
 
@@ -162,6 +163,9 @@ while run:
             run = False
 
     for shuriken in shurikens:
+
+        if shuriken.height
+
         if shuriken.x < 699 and shuriken.x > 0:
             shuriken.x += shuriken.vel
 
