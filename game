@@ -10,6 +10,15 @@ walkLeft = [pygame.image.load('pics\\NR2.PNG'),pygame.image.load('pics\\NR3.PNG'
 bg = pygame.image.load('pics\\bg.png')
 stan = pygame.image.load('pics\\Nstanding.png')
 
+Nh = pygame.image.load('pics\\Nh.png')
+Sh = pygame.image.load('pics\\Sh.png')
+
+
+hitSound = pygame.mixer.sound("pics\\hit.wav")
+bgm = pygame.mixer.music.load("pics\\theme.wav")
+
+pygame.mixer.music.play()
+
 Clock = pygame.time.Clock()
 
 class player():
@@ -26,6 +35,7 @@ class player():
         self.walkcount = 0
         self.standing = True
         self.hitbox = (self.x + 10 ,self.y + 5 ,80,80)
+        self.health = 200
 
 
     def draw(self,win):
@@ -34,6 +44,7 @@ class player():
 
 
         if not(self.standing):
+
 
             if self.left: 
 
@@ -46,14 +57,14 @@ class player():
 
         else:        
 
-            if self.right:
+            if self.left:
                 win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
 
             else:
                 win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
 
         self.hitbox = (self.x + 10 ,self.y + 5 ,80,80)
-        pygame.draw.rect(win,(255,0,0),self.hitbox,2)    
+           
 
 
 class weapons():
@@ -88,7 +99,7 @@ class enemy():
         self.speed = 8
         self.walkcount = 0
         self.hitbox = (self.x + 10,self.y + 5,80,80)
-
+        self.health = 200
 
     def draw(self,win):
         self.move()
@@ -105,7 +116,8 @@ class enemy():
             self.walkcount += 1
 
         self.hitbox = (self.x + 10,self.y + 5,80,80)
-        pygame.draw.rect(win,(255,0,0),self.hitbox,2)    
+        Sbar2 = pygame.draw.rect(win,(255,0,0),(410,45,200,20))
+        Sbar = pygame.draw.rect(win,(255,255,0),(600,45,-self.health,20))
 
 
     def move(self):
@@ -126,7 +138,12 @@ class enemy():
                 self.walkcount = 0
 
 def hit(self):
-    print("Hit")                
+    if self.health > 0:
+        self.health -= 10
+    else:
+        print('sasuke died') 
+
+
 
 
 
