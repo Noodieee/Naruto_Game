@@ -166,7 +166,7 @@ while run:
 
         if shuriken.hitbox[1] + round(shuriken.hitbox[3]/2) > sasuke.hitbox[1] and shuriken.hitbox[1] + round(shuriken.hitbox[3]/2) < sasuke.hitbox[1] + sasuke.hitbox[3]:
             if shuriken.hitbox[0] + shuriken.hitbox[2] > sasuke.hitbox[0] and shuriken.hitbox[0] + shuriken.hitbox[2] < sasuke.hitbox[0] + sasuke.hitbox[2]:
-                 sasuke.hit(2)
+                 sasuke.hit()
                  shurikens.pop(shurikens.index(shuriken))  
 
 
