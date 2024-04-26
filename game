@@ -14,10 +14,12 @@ Nh = pygame.image.load('pics\\Nh.png')
 Sh = pygame.image.load('pics\\Sh.png')
 
 
-hitSound = pygame.mixer.sound("pics\\hit.wav")
+hitSound = pygame.mixer.Sound("pics\\hit.wav")
 bgm = pygame.mixer.music.load("pics\\theme.wav")
 
 pygame.mixer.music.play()
+
+
 
 Clock = pygame.time.Clock()
 
@@ -39,8 +41,11 @@ class player():
 
 
     def draw(self,win):
-        if self.walkcount + 1 >= 6:
-            self.walkcount = 0
+
+        if self.health >0:
+
+            if self.walkcount + 1 >= 6:
+                self.walkcount = 0
 
 
         if not(self.standing):
@@ -64,6 +69,17 @@ class player():
                 win.blit(pygame.image.load('pics\\NR1.png'),(self.x,self.y))
 
         self.hitbox = (self.x + 10 ,self.y + 5 ,80,80)
+        Nbar2 = pygame.draw.rect(win,(255,0,0),(80,40,210,25))
+        Nbar = pygame.draw.rect(win,(255,255,0),(80,45,self.health,15))
+        
+    else:
+        win.blit(pygame.image.load('pics\\Nd.png'),(self.x,self.y))
+
+def hit(self):
+    if self.health > 0:
+        self.health -+ 5
+    else:
+        print("Naruto Died")
            
 
 
@@ -80,7 +96,7 @@ class weapons():
     def draw(self,win):
         win.blit(pygame.image.load('pics\\shur.png'),(self.x,self.y)) 
         self.hitbox = (self.x,self.y,40,40)
-        pygame.draw.rect(win,(255,0,0),self.hitbox,2)  
+          
 
 class enemy():
 
@@ -104,8 +120,10 @@ class enemy():
     def draw(self,win):
         self.move()
 
-        if self.walkcount + 1 >= 6:
-            self.walkcount = 0
+        if self.health > 0:
+
+             if self.walkcount + 1 >= 6:
+                 self.walkcount = 0
 
         if self.speed > 0:
             win.blit(self.walkRightS[self.walkcount//2], (self.x,self.y))
@@ -116,11 +134,12 @@ class enemy():
             self.walkcount += 1
 
         self.hitbox = (self.x + 10,self.y + 5,80,80)
-        Sbar2 = pygame.draw.rect(win,(255,0,0),(410,45,200,20))
-        Sbar = pygame.draw.rect(win,(255,255,0),(600,45,-self.health,20))
+        Sbar2 = pygame.draw.rect(win,(255,0,0),(410,40,210,25))
+        Sbar = pygame.draw.rect(win,(255,255,0),(620,45,-self.health,15))
 
 
     def move(self):
+
         if self.speed >0:
 
             if self.x + self.speed < self.path[1]:
@@ -153,13 +172,15 @@ def redrawgamewindow():
     win.blit(bg,(0,0))
     naruto.draw(win)
     sasuke.draw(win)
+    win.blit(Nh,(10,10))
+    win.blit(Sh,(600,10))
     for shuriken in shurikens:
         shuriken.draw(win)
 
     pygame.display.update()
 
-naruto = player(500,400,100,100) 
-sasuke = enemy(30,400,100,100,600)
+naruto = player(30,400,100,100) 
+sasuke = enemy(100,400,100,100,600)
 shurikens = []  
 throwspeed = 0
 
@@ -181,6 +202,14 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+
+    if naruto.health > 0 and sasuke.health > 0:
+        if naruto.hitbox[1] < sasuke.hitbox[1] + sasuke.hitbox[3] and naruto.hitbox[1] + 
+            if naruto.hitbox[0] + naruto.hitbox[2] > sasuke.hitbox[0] and naruto.hitbox[0] 
+                naruto.hit()
+
+    else:
+        if naruto.health
 
     for shuriken in shurikens:
 
