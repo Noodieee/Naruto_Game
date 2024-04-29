@@ -14,13 +14,6 @@ Nh = pygame.image.load('pics\\Nh.png')
 Sh = pygame.image.load('pics\\Sh.png')
 
 
-hitSound = pygame.mixer.Sound("pics\\hit.wav")
-bgm = pygame.mixer.music.load("pics\\theme.wav")
-
-pygame.mixer.music.play()
-
-
-
 Clock = pygame.time.Clock()
 
 class player():
@@ -72,8 +65,7 @@ class player():
         Nbar2 = pygame.draw.rect(win,(255,0,0),(80,40,210,25))
         Nbar = pygame.draw.rect(win,(255,255,0),(80,45,self.health,15))
         
-    else:
-        win.blit(pygame.image.load('pics\\Nd.png'),(self.x,self.y))
+   
 
 def hit(self):
     if self.health > 0:
@@ -204,12 +196,11 @@ while run:
             run = False
 
     if naruto.health > 0 and sasuke.health > 0:
-        if naruto.hitbox[1] < sasuke.hitbox[1] + sasuke.hitbox[3] and naruto.hitbox[1] + 
-            if naruto.hitbox[0] + naruto.hitbox[2] > sasuke.hitbox[0] and naruto.hitbox[0] 
+        if naruto.hitbox[1] < sasuke.hitbox[1] + sasuke.hitbox[3] and naruto.hitbox[1] > sasuke.hitbox[1] + naruto.hitbox[3] < naruto.hitbox[1]: 
+            if naruto.hitbox[0] + naruto.hitbox[2] > sasuke.hitbox[0] and naruto.hitbox[0] + naruto.hitbox[2] < sasuke.hitbox[0] + sasuke.hitbox[2]:
                 naruto.hit()
 
-    else:
-        if naruto.health
+    
 
     for shuriken in shurikens:
 
