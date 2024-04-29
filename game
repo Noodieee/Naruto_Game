@@ -127,7 +127,9 @@ class enemy():
 
         self.hitbox = (self.x + 10,self.y + 5,80,80)
         Sbar2 = pygame.draw.rect(win,(255,0,0),(410,40,210,25))
-        Sbar = pygame.draw.rect(win,(255,255,0),(620,45,-self.health,15))
+        Sbar = pygame.draw.rect(win,(255,255,0),(620,45,-self.health,20))
+
+
 
 
     def move(self):
@@ -199,6 +201,10 @@ while run:
         if naruto.hitbox[1] < sasuke.hitbox[1] + sasuke.hitbox[3] and naruto.hitbox[1] > sasuke.hitbox[1] + naruto.hitbox[3] < naruto.hitbox[1]: 
             if naruto.hitbox[0] + naruto.hitbox[2] > sasuke.hitbox[0] and naruto.hitbox[0] + naruto.hitbox[2] < sasuke.hitbox[0] + sasuke.hitbox[2]:
                 naruto.hit()
+    
+    else:
+        if naruto.health == 0:
+            naruto.speed = 0
 
     
 
@@ -206,8 +212,8 @@ while run:
 
         if shuriken.hitbox[1] + round(shuriken.hitbox[3]/2) > sasuke.hitbox[1] and shuriken.hitbox[1] + round(shuriken.hitbox[3]/2) < sasuke.hitbox[1] + sasuke.hitbox[3]:
             if shuriken.hitbox[0] + shuriken.hitbox[2] > sasuke.hitbox[0] and shuriken.hitbox[0] + shuriken.hitbox[2] < sasuke.hitbox[0] + sasuke.hitbox[2]:
-                 sasuke.hit()
-                 shurikens.pop(shurikens.index(shuriken))  
+                sasuke.hit()
+                shurikens.pop(shurikens.index(shuriken))  
 
 
                
